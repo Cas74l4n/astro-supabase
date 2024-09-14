@@ -2,10 +2,10 @@ import type { APIRoute } from "astro";
 import { supabase } from "../../lib/supabase";
 
 export const GET: APIRoute = async () => {
-  const { data, error } = await supabase
+  const { data, error } = (await supabase
     .from("guestbook")
     .select("*")
-    .order("created_at", { ascending: true });
+    .order("created_at", { ascending: true }));
 
   if (error) {
     return new Response(

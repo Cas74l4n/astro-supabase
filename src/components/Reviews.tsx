@@ -112,4 +112,4 @@ export function Reviews({ reviews }: { reviews: GuestbookEntry[] }) {
       </ErrorBoundary>
     </div>
   );
-}
+};

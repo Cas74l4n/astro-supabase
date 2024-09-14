@@ -2,6 +2,7 @@ import { defineMiddleware } from "astro:middleware";
 import { supabase } from "../lib/supabase";
 import micromatch from "micromatch";
 
+
 const protectedRoutes = ["/dashboard(|/)"];
 const redirectRoutes = ["/signin(|/)", "/register(|/)"];
 const proptectedAPIRoutes = ["/api/guestbook(|/)"];
@@ -23,21 +24,22 @@ export const onRequest = defineMiddleware(
 
       if (error) {
         cookies.delete("sb-access-token", {
-          path: "/",
+          path: "/"
         });
         cookies.delete("sb-refresh-token", {
-          path: "/",
+          path: "/"
         });
         return redirect("/signin");
       }
 
-      locals.email = data.user?.email!;
-      cookies.set("sb-access-token", data?.session?.access_token!, {
+      locals.email = data?.user?.email;
+
+      cookies.set("sb-access-token", data?.session?.access_token ?? "", {
         sameSite: "strict",
         path: "/",
         secure: true,
       });
-      cookies.set("sb-refresh-token", data?.session?.refresh_token!, {
+      cookies.set("sb-refresh-token", data?.session?.refresh_token ?? "", {
         sameSite: "strict",
         path: "/",
         secure: true,
